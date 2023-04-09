@@ -39,6 +39,9 @@ export default function Home() {
   const bubbles: ReactNode[] = []
   array.forEach((item, index) => { bubbles.push(<div className={Number(item) ? 'hiddens' : 'bubble'} id={index.toString()} onClick={() => hidden(index)}></div>) })
 
+  const [audioFlag, audioFlagUpdate] = useState(true)
+
+
   return (
     <main>
       <div className="countmain">
@@ -47,6 +50,13 @@ export default function Home() {
       </div>
       <div className="bubbles round">
         {bubbles}
+      </div>
+      <div onClick={() => {
+        audioFlagUpdate(!audioFlag)
+      }}>
+        {
+          audioFlag ? <img src='/audio.svg' width={100} /> : <img src='/unaudio.svg' width={100} />
+        }
       </div>
     </main>
   )
