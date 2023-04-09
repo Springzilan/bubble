@@ -30,7 +30,7 @@ export default function Home() {
       const tmp = array.slice()
       arrayUpdate(tmp)
       allZero()
-      audioRef.current?.play()
+      audioFlag && audioRef.current?.play()
       countUpdate(count + 1)
       allCountUpdate(allCount + 1)
     }
@@ -51,12 +51,14 @@ export default function Home() {
       <div className="bubbles round">
         {bubbles}
       </div>
-      <div onClick={() => {
-        audioFlagUpdate(!audioFlag)
-      }}>
-        {
-          audioFlag ? <img src='/audio.svg' width={100} /> : <img src='/unaudio.svg' width={100} />
-        }
+      <div className="audio">
+        <div onClick={() => {
+          audioFlagUpdate(!audioFlag)
+        }}>
+          {
+            audioFlag ? <img src='/audio.svg' /> : <img src='/unaudio.svg' />
+          }
+        </div>
       </div>
     </main>
   )
