@@ -75,6 +75,7 @@ body {
   bottom: 20px;
   right: 0;
   left: 0;
+  margin: 0 20px;
 }
 
 .footer-children {
@@ -84,7 +85,6 @@ body {
 }
 
 .audio {
-  margin-left: 30px;
   padding: 15px;
   width: 60px;
   border-radius: 16px;
@@ -95,9 +95,14 @@ body {
 }
 
 .help {
-  width: 36px;
-  height: 36px;
-  margin-right: 15px;
+  width: 60px;
+  height: 60px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #e0e0e0;
+  box-shadow: 18px 18px 36px #d0d0d0,
+    -18px -18px 36px #f0f0f0;
+  cursor: pointer;
 }
 
 .dialog {
