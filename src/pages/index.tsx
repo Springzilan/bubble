@@ -40,7 +40,7 @@ export default function Home() {
   array.forEach((item, index) => { bubbles.push(<div className={Number(item) ? 'hiddens' : 'bubble'} id={index.toString()} onClick={() => hidden(index)}></div>) })
 
   const [audioFlag, audioFlagUpdate] = useState(true)
-
+  const [helpstate, helpme] = useState(false)
 
   return (
     <main>
@@ -51,13 +51,26 @@ export default function Home() {
       <div className="bubbles round">
         {bubbles}
       </div>
-      <div className="audio">
-        <div onClick={() => {
-          audioFlagUpdate(!audioFlag)
-        }}>
-          {
-            audioFlag ? <img src='/audio.svg' /> : <img src='/unaudio.svg' />
-          }
+      <div className='footer'>
+        <div className='footer-children'>
+          <div className="audio" onClick={() => {
+            audioFlagUpdate(!audioFlag)
+          }}>
+            {
+              audioFlag ? <img src='/audio.svg' /> : <img src='/unaudio.svg' />
+            }
+          </div>
+          <div className='help' onClick={() => {
+            helpme(!helpstate)
+          }}><img src='/help.svg' /></div>
+        </div>
+      </div>
+      <div className='dialog' style={{ display: helpstate ? 'block' : 'none' }}>
+        <div className='dialog-w'>
+          <div className='close' onClick={() => {
+            helpme(!helpstate)
+          }}><img src='/close.svg' /></div>
+          <div className='dialog-p'>游戏介绍</div>
         </div>
       </div>
     </main>
