@@ -21,6 +21,20 @@ body {
   position: relative;
 }
 
+.user {
+  width: 60px;
+  height: 60px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #e0e0e0;
+  box-shadow: 18px 18px 36px #d0d0d0,
+    -18px -18px 36px #f0f0f0;
+  cursor: pointer;
+  float: right;
+  margin-right: 20px;
+  /* margin-left: auto; */
+}
+
 .bubbles {
   height: 520px;
   width: 520px;
@@ -113,7 +127,7 @@ body {
   top: 0;
   bottom: 0;
   position: fixed;
-  z-index: 999;
+  z-index: 888;
   backdrop-filter: blur(10px);
 }
 
@@ -133,8 +147,62 @@ body {
     -15px -15px 30px #f2f2f2;
 }
 
-.doalog-p {
-  /* padding-top: 40px; */
+.dialog-user {
+  width: 360px;
+  height: 360px;
+  margin: auto;
+  position: absolute;
+  padding: 10px;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #e0e0e0;
+  border-radius: 17px;
+  box-shadow: 15px 15px 30px #cecece,
+    -15px -15px 30px #f2f2f2;
+}
+
+.form {
+  margin-top: 70px;
+}
+
+.username {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+  text-align: center;
+  display: block;
+  margin: auto;
+  outline: none;
+  border-radius: 6px;
+  padding: 2px;
+  /* color: #c1c0c0; */
+}
+
+.login {
+  display: block;
+  margin: 35px auto;
+  width: 80px;
+  height: 40px;
+  border-radius: 16px;
+  color: #fafbfc;
+  background: #90c7fb;
+  box-shadow: 18px 18px 36px #d0d0d0,
+    -18px -18px 36px #f0f0f0;
+  cursor: pointer;
+}
+
+.dialog-p {
+  width: 460px;
+  height: 340px;
+  margin: auto;
+}
+
+.p-title {
+  text-align: center;
+  font-size: 24px;
+  margin-top: 40px;
 }
 
 .close {
@@ -142,4 +210,33 @@ body {
   width: 36px;
   float: right;
   margin-right: 5px;
+}
+
+.toast {
+  width: 100px;
+  background: #000;
+  opacity: 0.6;
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+ul {
+  list-style: none;
+  position: absolute;
+  bottom: 20px;
+}
+
+ul,
+li {
+  display: inline;
 }
