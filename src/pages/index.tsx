@@ -1,24 +1,36 @@
-import { ReactNode, use, useEffect, useRef, useState } from 'react';
-
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import Cookies from "js-cookie"
+import { get, post } from './api/api';
 // 定义音频对象的类型
 type AudioType = HTMLAudioElement | null;
 
+export type name = {
+  api: string | undefined
+}
 export default function Home() {
-
+  const [search, setSearch] = useState(false);
   const audioRef = useRef<AudioType>(null);
   useEffect(() => {
     audioRef.current = new Audio("/bubble.wav");
-  }, []);
+    const bubble = async () => {
+      get<any>("/api/bubble").then((res) => {
+        allCountUpdate(res.data.data.total)
+      })
+      get<any>("/api/bubble/" + Cookies.get('user')).then((res) => {
+        countUpdate(res.data.data)
+        console.log(res.data.data)
+      })
+    }
+    bubble()
+  }, [search]);
 
   let data: number[] = []
   for (let index = 0; index < 100; index++) {
     data[index] = 0;
   }
-
   let [array, arrayUpdate] = useState<number[]>(data)
-  let [count, countUpdate] = useState(0)
-  let [allCount, allCountUpdate] = useState(1000)
+  let [count, countUpdate] = useState<number>(0)
+  let [allCount, allCountUpdate] = useState<number>(0)
 
   const allZero = () => {
     if (array.every(item => item === 1)) {
@@ -26,7 +38,8 @@ export default function Home() {
     }
   }
 
-  const hidden = (id: number) => {
+  const hidden = async (id: number) => {
+    console.log('dianwow')
     if (array[id] == 0) {
       array[id] = 1
       const tmp = array.slice()
@@ -35,6 +48,10 @@ export default function Home() {
       audioFlag && audioRef.current?.play()
       countUpdate(count + 1)
       allCountUpdate(allCount + 1)
+      console.log('dianwowowowowo')
+      await post<any>("/api/bubble/" + Cookies.get('user'), '').then((res) => {
+        console.log('12321', res.data.data)
+      })
     }
   }
 
@@ -47,34 +64,17 @@ export default function Home() {
   const [username, usernameUpdate] = useState('')
   const [toastmsg, msgUpdata] = useState('')
   const [toaststate, toastUpdata] = useState(false)
-  let showToast = function (msg: string) {
-    // let x = document.getElementById("snackbar");
-    // x.className = "show";
-    // setTimeout(function () {
-    //   x.className = x.className.replace("show", "");
-    // }, 3000);
-    var m = document.createElement('div');
-    m.innerHTML = msg;
-    m.style.cssText = "width:80px; background:#000; opacity:0.6; height: 40px; line-height: 40px; color:#fff; line-height:30px; text-align:center; border-radius:4px; margin: auto; z-index:999999;";
-    document.body.appendChild(m);
-    setTimeout(function () {
-      var d = 0.5;
-      m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d + 's ease-in';
-      m.style.opacity = '0';
-      setTimeout(function () { document.body.removeChild(m) }, d * 1000);
-    }, 3000);
-  };
   const submit = () => {
     Cookies.set('user', username)
     console.log(username)
     if (Cookies.get('user')) {
       msgUpdata('登录成功')
+      setSearch(!search)
       toastUpdata(true)
       loginUpdate(false)
       setTimeout(() => {
         toastUpdata(false)
       }, 3000)
-      // showToast('登录成功')
       console.log('登录成功')
     } else {
       msgUpdata('用户不存在')
@@ -85,9 +85,15 @@ export default function Home() {
       console.log('用户不存在')
     }
   }
-
-
-
+  var name = {
+    "api": username
+  }
+  const regist = async () => {
+    await post<string>("/api/bubble", name).then((res) => {
+      msgUpdata('注册成功')
+      console.log('12321', res.data)
+    })
+  }
   return (
     <main>
       <div className="countmain">
@@ -102,7 +108,8 @@ export default function Home() {
         </div>
         <div className='user' onClick={() => {
           loginUpdate(!loginstate)
-        }}><img src='/user.svg' /></div></div>
+        }}><img src='/user.svg' /></div>
+      </div>
       <div className='footer'>
         <div className='footer-children'>
           <div className="audio" onClick={() => {
@@ -144,6 +151,7 @@ export default function Home() {
           <div className='form'>
             <input className='username' placeholder='用户名' type='text' value={username} onChange={event => usernameUpdate(event.target.value)} />
             <button className='login' type='submit' onClick={submit}>登录</button>
+            <button className='login' type='submit' onClick={regist}>注册</button>
           </div>
         </div>
       </div>
