@@ -39,7 +39,6 @@ export default function Home() {
   }
 
   const hidden = async (id: number) => {
-    console.log(bubbles)
     if (array[id] == 0) {
       array[id] = 1
       const tmp = array.slice()
@@ -145,7 +144,7 @@ export default function Home() {
             <img src='/close.svg' />
           </div>
           <div className='form'>
-            <input className='username' placeholder='用户名' type='text' value={username} onChange={event => usernameUpdate(event.target.value)} />
+            <input className='username' placeholder='用户名' type='text' value={username || Cookies.get('user')} onChange={event => usernameUpdate(event.target.value)} />
             <button className='login' type='submit' onClick={submit}>登录</button>
           </div>
         </div>
