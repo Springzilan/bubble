@@ -8,7 +8,7 @@ export type name = {
   api: string | undefined
 }
 export default function Home() {
-  const [search, setSearch] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const audioRef = useRef<AudioType>(null);
   useEffect(() => {
     audioRef.current = new Audio("/bubble.wav");
@@ -22,7 +22,7 @@ export default function Home() {
       })
     }
     bubble()
-  }, [search]);
+  }, [refresh]);
 
   let data: number[] = []
   for (let index = 0; index < 100; index++) {
@@ -39,7 +39,7 @@ export default function Home() {
   }
 
   const hidden = async (id: number) => {
-    console.log('dianwow')
+    console.log(bubbles)
     if (array[id] == 0) {
       array[id] = 1
       const tmp = array.slice()
@@ -48,7 +48,6 @@ export default function Home() {
       audioFlag && audioRef.current?.play()
       countUpdate(count + 1)
       allCountUpdate(allCount + 1)
-      console.log('dianwowowowowo')
       await post<any>("/api/bubble/" + Cookies.get('user'), '').then((res) => {
         console.log('12321', res.data.data)
       })
@@ -56,7 +55,7 @@ export default function Home() {
   }
 
   const bubbles: ReactNode[] = []
-  array.forEach((item, index) => { bubbles.push(<div className={Number(item) ? 'hiddens' : 'bubble'} id={index.toString()} onClick={() => hidden(index)}></div>) })
+  array.forEach((item, index) => { bubbles.push(<div className={Number(item) ? 'hiddens' : 'bubble'} key={index} id={index.toString()} onClick={() => hidden(index)}></div>) })
 
   const [audioFlag, audioFlagUpdate] = useState(true)
   const [helpstate, helpme] = useState(false)
@@ -64,38 +63,35 @@ export default function Home() {
   const [username, usernameUpdate] = useState('')
   const [toastmsg, msgUpdata] = useState('')
   const [toaststate, toastUpdata] = useState(false)
-  const submit = () => {
-    Cookies.set('user', username)
-    console.log(username)
-    if (Cookies.get('user')) {
-      msgUpdata('登录成功')
-      setSearch(!search)
-      toastUpdata(true)
-      loginUpdate(false)
-      setTimeout(() => {
-        toastUpdata(false)
-      }, 3000)
-      console.log('登录成功')
-    } else {
-      msgUpdata('用户不存在')
-      toastUpdata(true)
-      setTimeout(() => {
-        toastUpdata(false)
-      }, 3000)
-      console.log('用户不存在')
-    }
-  }
   var name = {
     "api": username
   }
-  const regist = async () => {
+  const submit = async () => {
     await post<string>("/api/bubble", name).then((res) => {
-      msgUpdata('注册成功')
-      console.log('12321', res.data)
+      console.log('注册', res.data)
+      Cookies.set('user', username)
+      console.log(username)
+      if (Cookies.get('user')) {
+        msgUpdata('登录成功')
+        setRefresh(!refresh)
+        toastUpdata(true)
+        loginUpdate(false)
+        setTimeout(() => {
+          toastUpdata(false)
+        }, 3000)
+        console.log('登录成功')
+      } else {
+        msgUpdata('用户不存在')
+        toastUpdata(true)
+        setTimeout(() => {
+          toastUpdata(false)
+        }, 3000)
+        console.log('用户不存在')
+      }
     })
   }
   return (
-    <main>
+    <>
       <div className="countmain">
         <div className="count">{allCount} / ∞</div>
         <div>
@@ -151,11 +147,10 @@ export default function Home() {
           <div className='form'>
             <input className='username' placeholder='用户名' type='text' value={username} onChange={event => usernameUpdate(event.target.value)} />
             <button className='login' type='submit' onClick={submit}>登录</button>
-            <button className='login' type='submit' onClick={regist}>注册</button>
           </div>
         </div>
       </div>
       <div className='toast' style={{ display: toaststate ? 'block' : 'none' }}>{toastmsg}</div>
-    </main>
+    </>
   )
 }
