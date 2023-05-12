@@ -20,6 +20,7 @@ export default function Home() {
         countUpdate(res.data.data)
         console.log(res.data.data)
       })
+      usernameUpdate('')
     }
     bubble()
   }, [refresh]);
@@ -72,6 +73,7 @@ export default function Home() {
       console.log(username)
       if (Cookies.get('user')) {
         msgUpdata('登录成功')
+        arrayUpdate(data)
         setRefresh(!refresh)
         toastUpdata(true)
         loginUpdate(false)
@@ -89,12 +91,18 @@ export default function Home() {
       }
     })
   }
+  const logout = () => {
+    Cookies.remove('user')
+    setRefresh(!refresh)
+    loginUpdate(false)
+    arrayUpdate(data)
+  }
   return (
     <>
       <div className="countmain">
         <div className="count">{allCount} / ∞</div>
         <div>
-          <div className='count'>{count}</div>
+          <div className='count'>{count || 0}</div>
         </div>
       </div>
       <div>
@@ -144,8 +152,13 @@ export default function Home() {
             <img src='/close.svg' />
           </div>
           <div className='form'>
-            <input className='username' placeholder='用户名' type='text' value={username || Cookies.get('user')} onChange={event => usernameUpdate(event.target.value)} />
-            <button className='login' type='submit' onClick={submit}>登录</button>
+            {Cookies.get('user') ?
+              <><div className='username'>{Cookies.get('user')}</div>
+                <button className='login' type='submit' onClick={logout}>登出</button></> :
+              <>
+                <input className='username' placeholder='用户名' type='text' value={username} onChange={event => usernameUpdate(event.target.value)} />
+                <button className='login' type='submit' onClick={submit}>登录</button></>
+            }
           </div>
         </div>
       </div>
