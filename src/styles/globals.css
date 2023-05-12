@@ -19,6 +19,13 @@
 body {
   background-image: url('../img/bg.png');
   position: relative;
+  -webkit-user-select: none;
+  /* Chrome, Safari, Opera */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 .user {
@@ -149,7 +156,7 @@ body {
 
 .dialog-user {
   width: 360px;
-  height: 360px;
+  height: 220px;
   margin: auto;
   position: absolute;
   padding: 10px;
@@ -225,8 +232,6 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
-  bottom: 0;
   z-index: 999;
 }
 

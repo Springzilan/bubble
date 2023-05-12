@@ -75,8 +75,8 @@ export default function Home() {
         msgUpdata('登录成功')
         arrayUpdate(data)
         setRefresh(!refresh)
-        toastUpdata(true)
         loginUpdate(false)
+        toastUpdata(true)
         setTimeout(() => {
           toastUpdata(false)
         }, 3000)
@@ -93,8 +93,13 @@ export default function Home() {
   }
   const logout = () => {
     Cookies.remove('user')
+    msgUpdata('登出成功')
     setRefresh(!refresh)
     loginUpdate(false)
+    toastUpdata(true)
+    setTimeout(() => {
+      toastUpdata(false)
+    }, 3000)
     arrayUpdate(data)
   }
   return (
