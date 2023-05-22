@@ -11,7 +11,7 @@ export default function Home() {
   const [refresh, setRefresh] = useState(false);
   const audioRef = useRef<AudioType>(null);
   useEffect(() => {
-    audioRef.current = new Audio("/bubble.wav");
+    audioRef.current = new Audio("https://cdn.jsdelivr.net/gh/Springzilan/bubble@master/public/bubble.wav");
     const bubble = async () => {
       get<any>("/api/bubble").then((res) => {
         allCountUpdate(res.data.data.total)
@@ -116,7 +116,7 @@ export default function Home() {
         </div>
         <div className='user' onClick={() => {
           loginUpdate(!loginstate)
-        }}><img src='/user.svg' /></div>
+        }}><img src='https://cdn.jsdelivr.net/gh/Springzilan/bubble@master/public/user.svg' /></div>
       </div>
       <div className='footer'>
         <div className='footer-children'>
@@ -124,19 +124,19 @@ export default function Home() {
             audioFlagUpdate(!audioFlag)
           }}>
             {
-              audioFlag ? <img src='/audio.svg' /> : <img src='/unaudio.svg' />
+              audioFlag ? <img src='https://cdn.jsdelivr.net/gh/Springzilan/bubble@master/public/audio.svg' /> : <img src='https://cdn.jsdelivr.net/gh/Springzilan/bubble@master/public/unaudio.svg' />
             }
           </div>
           <div className='help' onClick={() => {
             helpme(!helpstate)
-          }}><img src='/help.svg' /></div>
+          }}><img src='https://cdn.jsdelivr.net/gh/Springzilan/bubble@master/public/help.svg' /></div>
         </div>
       </div>
       <div className='dialog' style={{ display: helpstate ? 'block' : 'none' }}>
         <div className='dialog-w'>
           <div className='close' onClick={() => {
             helpme(!helpstate)
-          }}><img src='/close.svg' /></div>
+          }}><img src='https://cdn.jsdelivr.net/gh/Springzilan/bubble@master/public/close.svg' /></div>
           <div className='dialog-p'>
             <div className='p-title'>游戏介绍</div>
             <p>捏泡泡游戏，解压小游戏。可以登录，记录泡泡数量</p>
@@ -154,7 +154,7 @@ export default function Home() {
           <div className='close' onClick={() => {
             loginUpdate(!loginstate)
           }}>
-            <img src='/close.svg' />
+            <img src='https://cdn.jsdelivr.net/gh/Springzilan/bubble@master/public/close.svg' />
           </div>
           <div className='form'>
             {Cookies.get('user') ?
