@@ -111,7 +111,7 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <div className="bubbles round">
+        <div className="bubbles">
           {bubbles}
         </div>
         <div className='user' onClick={() => {
